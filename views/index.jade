@@ -1,0 +1,46 @@
+extends layout
+
+block content
+    div.container
+        div.jumbotron
+            //- h1 My Kanban Board
+            h1 Board
+            p Welcome!! This is my Kanban Board which let me do my job better!
+            p If you want to create new task, just push this button!!
+            div.form-group
+                form(action='/createTask', method='post')
+                    input(type='text' name='contents' class='form-control')
+                    button(type='submit' class='btn btn-success') Add Task
+        div.row
+            div.col-lg-4
+                ul.list-group
+                    li.list-group-item.active TO-DO
+                        span.badge= todoTasks.length
+                    each val in todoTasks
+                        div.input-group
+                        li.list-group-item= val
+                        div.input-group-btn
+                            form(action='updateTask' method='post')
+                                input(type='hidden' name='status' value='In-Progress')
+                                button(type='submit' class='btn btn-info' name='contents' value= val) <strong></strong>
+            div.col-lg-4
+                ul.list-group
+                    li.list-group-item.active In-Progress
+                        span.badge= inProgressTasks.length
+                    each val in inProgressTasks
+                        div.input-group
+                        li.list-group-item= val
+                        div.input-group-btn
+                            form(action='updateTask' method='post')
+                                input(type='hidden' name='status' value='Done')
+                                button(type='submit' class='btn btn-info' name='contents' value= val) <strong></strong>
+            div.col-lg-4
+                ul.list-group
+                    li.list-group-item.active Done
+                        span.badge= doneTasks.length
+                    each val in doneTasks
+                        div.input-group
+                        li.list-group-item= val
+                        div.input-group-btn
+                            form(action='removeTask' method='post')
+                                button(type='submit' class='btn btn-info' name='contents' value= val) <strong></strong>
